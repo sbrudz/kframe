@@ -39,6 +39,7 @@ AFRAME.registerComponent('look-at', {
   init: function () {
     this.target3D = null;
     this.vector = new THREE.Vector3();
+    this.wpVector = new THREE.Vector3();
   },
 
   /**
@@ -86,7 +87,8 @@ AFRAME.registerComponent('look-at', {
     var vector = this.vector;
 
     if (target3D) {
-      target = object3D.parent.worldToLocal(target3D.getWorldPosition());
+      target3D.getWorldPosition(this.wpVector);
+      target = object3D.parent.worldToLocal(this.wpVector);
       if (this.el.getObject3D('camera')) {
         // Flip the vector to -z, looking away from target for camera entities. When using
         // lookat from THREE camera objects, this is applied for you, but since the camera is
